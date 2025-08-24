@@ -23,8 +23,10 @@
 
     .stage {
   position: relative; 
-  width: 100%;     /* sebelumnya: min(100vw, 177.78vh) */
-  height: 100%;    /* tambahkan height penuh */
+  width: 100vw;             /* lebar penuh layar */
+  aspect-ratio: 16/9;       /* paksa rasio 16:9 */
+  max-height: 100vh;        /* jangan lebih tinggi dari layar */
+  margin: auto;             /* center di layar */
   background: #ee1414;
   border: 3px solid #e6e8eb; 
   border-radius: 18px; 
@@ -621,3 +623,4 @@
   </script>
 </body>
 </html>
+
