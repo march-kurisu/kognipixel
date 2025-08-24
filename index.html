@@ -10,17 +10,29 @@
     html, body { height: 100%; margin: 0; background:#0b0f14; font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, "Helvetica Neue", Arial, "Apple Color Emoji", "Segoe UI Emoji"; }
     button, input { font: inherit; }
 
-    .stage {
+    /* --- APP WRAPPER (locks to 16:9) --- */
+    .app-wrap {
       position: relative; 
-      width: min(100vw, 177.78vh); /* 16:9 fit */
-      aspect-ratio: 16/9; 
-      background: #ee1414;
-      border: 3px solid #e6e8eb; 
-      border-radius: 18px; 
-      overflow: hidden; 
-      image-rendering: pixelated; 
-      box-shadow: 0 10px 30px rgba(0,0,0,0.45);
+      height: 100svh; 
+      width: 100vw;
+      display: grid; 
+      place-items: center; 
+      overflow: hidden;
+      color: #e6f0ff;
     }
+
+    .stage {
+  position: relative; 
+  width: 100%;     /* sebelumnya: min(100vw, 177.78vh) */
+  height: 100%;    /* tambahkan height penuh */
+  background: #ee1414;
+  border: 3px solid #e6e8eb; 
+  border-radius: 18px; 
+  overflow: hidden; 
+  image-rendering: pixelated; 
+  box-shadow: 0 10px 30px rgba(0,0,0,0.45);
+}
+
 
     /* --- PAGES / SCREENS --- */
     .screen { position:absolute; inset:0; display:none; }
@@ -106,15 +118,6 @@
     th, td { padding:12px; border-bottom:1px solid #183049; }
     th { text-align:left; background:#102034; position:sticky; top:0; }
 
-    /* --- ROTATION HINT FOR PORTRAIT --- */
-    .rotate-hint { position:fixed; inset:0; background:#000b; color:white; display:none; align-items:center; justify-content:center; text-align:center; padding:24px; z-index:999; }
-    .rotate-hint.show { display:flex; }
-    .rotate-hint .box { background:#0f1c29; border:2px solid #28425e; border-radius:16px; padding:20px; max-width: 520px; }
-
-    @media (max-aspect-ratio: 16/9) {
-      /* If screen is too tall (portrait), show rotate message */
-      .rotate-hint { display:flex; }
-    }
   </style>
 </head>
 <body>
@@ -230,15 +233,7 @@
         </div>
       </section>
     </div>
-  </div>
-
-  <!-- PORTRAIT ROTATION HINT -->
-  <div class="rotate-hint" id="rotateHint">
-    <div class="box">
-      <h3 style="margin:0 0 8px;">Gunakan Mode Landscape</h3>
-      <p>Game ini dibuat untuk rasio 16:9. Silakan rotasi perangkat Anda ke horizontal/landscape.</p>
-    </div>
-  </div>
+  </div> 
 
   <script>
     // =============================
@@ -622,18 +617,7 @@
     document.getElementById('btnAgain').addEventListener('click', ()=>{ goto('start'); });
     document.getElementById('btnResetBoard').addEventListener('click', ()=>{ if(confirm('Reset leaderboard?')){ saveBoard([]); renderBoard(); } });
 
-    // =============================
-    //  ORIENTATION HINT
-    // =============================
-    const rotateHint = document.getElementById('rotateHint');
-    function checkAspect(){
-      const r = window.innerWidth / window.innerHeight;
-      rotateHint.classList.toggle('show', r < 16/9);
-    }
-    window.addEventListener('resize', checkAspect);
-    window.addEventListener('load', checkAspect);
 
   </script>
 </body>
 </html>
-
